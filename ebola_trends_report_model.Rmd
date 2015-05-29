@@ -60,11 +60,15 @@ select_trends$modelled <- as.numeric(select_trends$modelled)
 ```{r FigureSnew, echo=FALSE, fig.width=12, fig.height=6.5}
 molten_data <- melt(select_trends, id.vars=c("weeknum", "days", "week"), variable.name = "data_type")
 cols <- c("google_trends"="#000000", "modelled"="orange")
+label1 = paste("Google trends for ebola (N = ", sum(select_trends$google_trends), ")", sep="")
+label2 = paste("Modelled ebola trends data (N = ", sum(select_trends$modelled), ")", sep="")
 
-ggplot(data=molten_data) + geom_point(aes(x=weeknum, y=value, colour=data_type)) + geom_line(aes(x=weeknum, y=value, colour=data_type), size=1) + labs(x="Week Number", y="Number of searches") + mytheme + 
-  theme(legend.position=c(0.8,0.9), legend.key.height=unit(1, "cm"), legend.key.width=unit(1, "cm"), legend.title = element_blank(), legend.text = element_text(colour = 'black', size = 19, face = 'bold'), legend.direction='vertical', legend.box='horizontal') +
-  scale_colour_manual(values = cols, breaks=c("google_trends", "modelled"),
-                      labels=c("Google trends for ebola", "Modelled ebola trends data"))
+ggplot(data=molten_data) + geom_point(aes(x=weeknum, y=value, colour=data_type)) + 
+  geom_line(aes(x=weeknum, y=value, colour=data_type), size=1) + labs(x="Week Number", y="Number of searches") + mytheme + 
+  theme(legend.position=c(0.75,0.9), legend.key.height=unit(1, "cm"), legend.key.width=unit(1, "cm"), 
+        legend.title = element_blank(), legend.text = element_text(colour = 'black', size = 19, face = 'bold'), 
+        legend.direction='vertical', legend.box='horizontal') +
+  scale_colour_manual(values = cols, breaks=c("google_trends", "modelled"), labels=c(label1, label2))
 
 ```
 
